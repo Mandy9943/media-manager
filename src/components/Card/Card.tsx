@@ -1,22 +1,11 @@
-/*!
+import { Box, BoxProps, useStyleConfig } from "@chakra-ui/react";
 
-=========================================================
-* Vision UI PRO Chakra - v1.0.0
-=========================================================
+interface IProps extends BoxProps {
+  children: React.ReactNode;
+  variant?: string;
+}
 
-* Product Page: https://www.creative-tim.com/product/vision-ui-dashboard-pro-chakra
-* Copyright 2021 Creative Tim (https://www.creative-tim.com/)
-
-* Design and Coded by Simmmple & Creative Tim
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-*/
-import { Box, useStyleConfig } from "@chakra-ui/react";
-function Card(props) {
-  const { variant, children, ...rest } = props;
+function Card({ children, variant, ...rest }: IProps) {
   const styles = useStyleConfig("Card", { variant });
   return (
     <Box __css={styles} {...rest}>

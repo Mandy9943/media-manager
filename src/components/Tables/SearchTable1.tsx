@@ -41,7 +41,7 @@ interface IProps {
   tableData: any;
   notShowEntriesText?: boolean;
   notShowPagination?: boolean;
-  canPreviousPage?: boolean;
+  disableSortKeys?: string[];
 }
 
 const SearchTable1 = ({
@@ -49,7 +49,7 @@ const SearchTable1 = ({
   tableData,
   notShowEntriesText,
   notShowPagination,
-  canPreviousPage,
+  disableSortKeys,
 }: IProps) => {
   const [globalFilter, setGlobalFilter] = React.useState("");
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
@@ -82,6 +82,7 @@ const SearchTable1 = ({
     getPageCount,
     setPageIndex,
     getCanNextPage,
+    getCanPreviousPage,
   } = tableInstance;
 
   const createPages = (count: number) => {
@@ -168,6 +169,17 @@ const SearchTable1 = ({
             {getHeaderGroups().map((headerGroup, index) => (
               <Tr key={headerGroup.id}>
                 {headerGroup.headers.map((header, index) => {
+                  const disableIndex = disableSortKeys?.findIndex(
+                    (headerKey) => headerKey === header.column.columnDef.header
+                  );
+                  let disableSort = !header.column.getCanSort();
+
+                  console.log(header.column.columnDef.header, disableSort);
+                  if (disableIndex !== undefined && disableIndex !== -1) {
+                    disableSort = true;
+                  }
+                  console.log(header.column.columnDef.header, disableSort);
+
                   return (
                     <Th borderColor="#56577A" pe="0px" key={index}>
                       <Flex
@@ -175,8 +187,12 @@ const SearchTable1 = ({
                         align="center"
                         fontSize={{ sm: "10px", lg: "12px" }}
                         color="gray.400"
-                        onClick={header.column.getToggleSortingHandler()}
-                        {...(header.column.getCanSort()
+                        onClick={
+                          !disableSort
+                            ? header.column.getToggleSortingHandler()
+                            : undefined
+                        }
+                        {...(!disableSort
                           ? {
                               cursor: "pointer",
                             }
@@ -186,22 +202,22 @@ const SearchTable1 = ({
                           header.column.columnDef.header,
                           header.getContext()
                         )}
-                        <Icon
-                          w={{ sm: "10px", md: "14px" }}
-                          h={{ sm: "10px", md: "14px" }}
-                          color={
-                            header.column.getCanSort() ? "gray.500" : "gray.400"
-                          }
-                          float="right"
-                          as={
-                            header.column.getIsSorted()
-                              ? (header.column.getIsSorted() as SortDirection) ===
-                                "desc"
-                                ? TiArrowSortedDown
-                                : TiArrowSortedUp
-                              : TiArrowUnsorted
-                          }
-                        />
+                        {!disableSort && (
+                          <Icon
+                            w={{ sm: "10px", md: "14px" }}
+                            h={{ sm: "10px", md: "14px" }}
+                            color={!disableSort ? "gray.500" : "gray.400"}
+                            float="right"
+                            as={
+                              header.column.getIsSorted()
+                                ? (header.column.getIsSorted() as SortDirection) ===
+                                  "desc"
+                                  ? TiArrowSortedDown
+                                  : TiArrowSortedUp
+                                : TiArrowUnsorted
+                            }
+                          />
+                        )}
                       </Flex>
                     </Th>
                   );
@@ -266,7 +282,7 @@ const SearchTable1 = ({
               bg="#fff"
               border="1px solid lightgray"
               display={
-                pageSize === 5 ? "none" : canPreviousPage ? "flex" : "none"
+                pageSize === 5 ? "none" : getCanPreviousPage() ? "flex" : "none"
               }
               _hover={{
                 bg: "gray.200",

@@ -1,10 +1,11 @@
+import Container from "@/components/Container/Container";
 import ProductTable from "./components/ProductTable/ProductTable";
 
 const Home = () => {
   return (
-    <div>
+    <Container my={10}>
       <ProductTable />
-    </div>
+    </Container>
   );
 };
 

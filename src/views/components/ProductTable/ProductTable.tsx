@@ -2,7 +2,7 @@ import Card from "@/components/Card/Card";
 import CardBody from "@/components/Card/CardBody";
 import SearchTable1 from "@/components/Tables/SearchTable1";
 import { IProduct } from "@/types/product.type";
-import productsColumns from "./columns";
+import productsColumns, { excludeSort } from "./columns";
 const testData: IProduct[] = [
   {
     id: 1,
@@ -141,9 +141,9 @@ const ProductTable = () => {
     <Card px="0px" w="full">
       <CardBody>
         <SearchTable1
-          canPreviousPage
           columnsData={productsColumns}
           tableData={testData}
+          disableSortKeys={excludeSort}
         />
       </CardBody>
     </Card>
