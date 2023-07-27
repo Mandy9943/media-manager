@@ -14,16 +14,15 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 */
+import { Box, useStyleConfig } from "@chakra-ui/react";
+function CardBody(props) {
+  const { variant, children, ...rest } = props;
+  const styles = useStyleConfig("CardBody", { variant });
+  return (
+    <Box __css={styles} {...rest}>
+      {children}
+    </Box>
+  );
+}
 
-const PanelContainer = {
-  baseStyle: {
-    // padding: "30px 15px",
-    minHeight: "calc(100vh - 123px)",
-  },
-};
-
-export const PanelContainerComponent = {
-  components: {
-    PanelContainer,
-  },
-};
+export default CardBody;

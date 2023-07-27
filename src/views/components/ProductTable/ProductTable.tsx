@@ -1,10 +1,7 @@
-"use client";
-
-import { Box } from "@chakra-ui/react";
-import dynamic from "next/dynamic";
-const SearchTable1 = dynamic(() => import("@/components/Tables/SearchTable1"), {
-  ssr: false,
-});
+import Card from "@/components/Card/Card";
+import CardBody from "@/components/Card/CardBody";
+import SearchTable1 from "@/components/Tables/SearchTable1";
+import productsColumns from "./columns";
 const data = [
   {
     id: 1,
@@ -520,39 +517,14 @@ const data = [
     salary: "$38503.99",
   },
 ];
-
-export const columnsData2 = [
-  {
-    Header: "NAME",
-    accessor: "name",
-  },
-  {
-    Header: "POSITION",
-    accessor: "position",
-  },
-  {
-    Header: "OFFICE",
-    accessor: "office",
-  },
-  {
-    Header: "AGE",
-    accessor: "age",
-  },
-  {
-    Header: "START DATE",
-    accessor: "date",
-  },
-  {
-    Header: "SALARY",
-    accessor: "salary",
-  },
-];
-
-export default function Home() {
+const ProductTable = () => {
   return (
-    <main>
-      <Box bg="brand.500" w="full" h={200}></Box>
-      <SearchTable1 columnsData={data} tableData={columnsData2} />
-    </main>
+    <Card px="0px">
+      <CardBody>
+        <SearchTable1 columnsData={productsColumns} tableData={data} />
+      </CardBody>
+    </Card>
   );
-}
+};
+
+export default ProductTable;

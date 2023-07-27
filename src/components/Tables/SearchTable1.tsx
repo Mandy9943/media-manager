@@ -1,20 +1,3 @@
-/*!
-
-=========================================================
-* Vision UI PRO Chakra - v1.0.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/vision-ui-dashboard-pro-chakra
-* Copyright 2021 Creative Tim (https://www.creative-tim.com/)
-
-* Design and Coded by Simmmple & Creative Tim
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-*/
-
 import {
   Button,
   Flex,
@@ -35,63 +18,74 @@ import {
   Thead,
   Tr,
 } from "@chakra-ui/react";
-import { useMemo } from "react";
+import {
+  ColumnFiltersState,
+  SortDirection,
+  flexRender,
+  getCoreRowModel,
+  getFilteredRowModel,
+  getPaginationRowModel,
+  getSortedRowModel,
+  useReactTable,
+} from "@tanstack/react-table";
+import React, { useMemo } from "react";
 import { GrFormNext, GrFormPrevious } from "react-icons/gr";
 import {
   TiArrowSortedDown,
   TiArrowSortedUp,
   TiArrowUnsorted,
 } from "react-icons/ti";
-import {
-  useGlobalFilter,
-  usePagination,
-  useSortBy,
-  useTable,
-} from "react-table";
 
-function SearchTable1(props) {
-  const { columnsData, tableData } = props;
+interface IProps {
+  columnsData: any[];
+  tableData: any;
+  notShowEntriesText?: boolean;
+  notShowPagination?: boolean;
+  canPreviousPage?: boolean;
+}
 
-  const columns = useMemo(() => columnsData, []);
-  const data = useMemo(() => tableData, []);
-
-  const tableInstance = useTable(
-    {
-      columns,
-      data,
-    },
-    useGlobalFilter,
-    useSortBy,
-    usePagination
+const SearchTable1 = ({
+  columnsData,
+  tableData,
+  notShowEntriesText,
+  notShowPagination,
+  canPreviousPage,
+}: IProps) => {
+  const [globalFilter, setGlobalFilter] = React.useState("");
+  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
+    []
   );
+  const columns = useMemo(() => columnsData, [columnsData]);
+  const data = useMemo(() => tableData, [tableData]);
+
+  const tableInstance = useReactTable({
+    columns,
+    data,
+    getCoreRowModel: getCoreRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
+    getSortedRowModel: getSortedRowModel(),
+    onGlobalFilterChange: setGlobalFilter,
+    getFilteredRowModel: getFilteredRowModel(),
+    state: {
+      columnFilters,
+      globalFilter,
+    },
+  });
 
   const {
-    getTableProps,
-    getTableBodyProps,
-    headerGroups,
-    page,
-    gotoPage,
-    pageCount,
-    prepareRow,
+    getHeaderGroups,
+    getRowModel,
     nextPage,
     previousPage,
-    canNextPage,
-    canPreviousPage,
     setPageSize,
-    setGlobalFilter,
-    state,
+    getState,
+    getPageCount,
+    setPageIndex,
+    getCanNextPage,
   } = tableInstance;
 
-  console.log(
-    "headerGroups",
-    headerGroups.map((headerGroup) =>
-      headerGroup.headers.map((column) => column.render("Header"))
-    )
-  );
-  console.log("page", page);
-
-  const createPages = (count) => {
-    let arrPageCount = [];
+  const createPages = (count: number) => {
+    const arrPageCount = [];
 
     for (let i = 1; i <= count; i++) {
       arrPageCount.push(i);
@@ -100,16 +94,29 @@ function SearchTable1(props) {
     return arrPageCount;
   };
 
-  const { pageIndex, pageSize, globalFilter } = state;
+  const {
+    pagination: { pageIndex, pageSize },
+  } = getState();
+
+  const pageCount = getPageCount();
+
+  const gotoPage = (page: number) => {
+    setPageIndex(page);
+  };
 
   return (
     <>
       <Flex
         direction="column"
         w="100%"
-        overflowX={{ sm: "scroll", lg: "hidden" }}
+        overflowX={{ sm: "auto", lg: "hidden" }}
       >
-        <Flex justify="space-between" align="center" w="100%" px="22px">
+        <Flex
+          justify="space-between"
+          align="center"
+          w="100%"
+          px={{ xs: "0px", lg: "22px" }}
+        >
           <Stack
             direction={{ sm: "column", md: "row" }}
             spacing={{ sm: "4px", md: "12px" }}
@@ -141,6 +148,7 @@ function SearchTable1(props) {
             </Text>
           </Stack>
           <Input
+            mb={{ xs: "20px", lg: "0px" }}
             color="gray.400"
             bg="#0F1535"
             border="0.5px solid"
@@ -155,58 +163,69 @@ function SearchTable1(props) {
             onChange={(e) => setGlobalFilter(e.target.value)}
           />
         </Flex>
-        <Table {...getTableProps()} variant="simple" color="gray.500" mb="24px">
+        <Table variant="simple" color="gray.500" mb="24px">
           <Thead>
-            {headerGroups.map((headerGroup, index) => (
-              <Tr {...headerGroup.getHeaderGroupProps()} key={index}>
-                {headerGroup.headers.map((column, index) => (
-                  <Th
-                    borderColor="#56577A"
-                    {...column.getHeaderProps(column.getSortByToggleProps())}
-                    pe="0px"
-                    key={index}
-                  >
-                    <Flex
-                      justify="space-between"
-                      align="center"
-                      fontSize={{ sm: "10px", lg: "12px" }}
-                      color="gray.400"
-                    >
-                      {column.render("Header")}
-                      <Icon
-                        w={{ sm: "10px", md: "14px" }}
-                        h={{ sm: "10px", md: "14px" }}
-                        color={columns.isSorted ? "gray.500" : "gray.400"}
-                        float="right"
-                        as={
-                          column.isSorted
-                            ? column.isSortedDesc
-                              ? TiArrowSortedDown
-                              : TiArrowSortedUp
-                            : TiArrowUnsorted
-                        }
-                      />
-                    </Flex>
-                  </Th>
-                ))}
+            {getHeaderGroups().map((headerGroup, index) => (
+              <Tr key={headerGroup.id}>
+                {headerGroup.headers.map((header, index) => {
+                  return (
+                    <Th borderColor="#56577A" pe="0px" key={index}>
+                      <Flex
+                        justify="space-between"
+                        align="center"
+                        fontSize={{ sm: "10px", lg: "12px" }}
+                        color="gray.400"
+                        onClick={header.column.getToggleSortingHandler()}
+                        {...(header.column.getCanSort()
+                          ? {
+                              cursor: "pointer",
+                            }
+                          : {})}
+                      >
+                        {flexRender(
+                          header.column.columnDef.header,
+                          header.getContext()
+                        )}
+                        <Icon
+                          w={{ sm: "10px", md: "14px" }}
+                          h={{ sm: "10px", md: "14px" }}
+                          color={
+                            header.column.getCanSort() ? "gray.500" : "gray.400"
+                          }
+                          float="right"
+                          as={
+                            header.column.getIsSorted()
+                              ? (header.column.getIsSorted() as SortDirection) ===
+                                "desc"
+                                ? TiArrowSortedDown
+                                : TiArrowSortedUp
+                              : TiArrowUnsorted
+                          }
+                        />
+                      </Flex>
+                    </Th>
+                  );
+                })}
               </Tr>
             ))}
           </Thead>
-          <Tbody {...getTableBodyProps()}>
-            {page.map((row, index) => {
-              prepareRow(row);
+          <Tbody>
+            {getRowModel().rows.map((row, index) => {
               return (
-                <Tr {...row.getRowProps()} key={index}>
-                  {row.cells.map((cell, index) => {
+                <Tr key={row.id}>
+                  {row.getVisibleCells().map((cell, index) => {
                     return (
                       <Td
                         borderColor="#56577A"
                         color="white"
-                        {...cell.getCellProps()}
-                        fontSize={{ sm: "14px" }}
+                        padding={{ xs: "20px 0px 12px 0px ", md: "12px" }}
+                        paddingLeft={"8px"}
                         key={index}
                       >
-                        {cell.render("Cell")}
+                        {flexRender(
+                          cell.column.columnDef.cell,
+                          cell.getContext()
+                        )}
                       </Td>
                     );
                   })}
@@ -219,22 +238,23 @@ function SearchTable1(props) {
           direction={{ sm: "column", md: "row" }}
           justify="space-between"
           align="center"
-          px="22px"
           w="100%"
           px={{ md: "22px" }}
         >
-          <Text
-            fontSize="sm"
-            color="white"
-            fontWeight="500"
-            mb={{ sm: "24px", md: "0px" }}
-          >
-            Showing {pageSize * pageIndex + 1} to{" "}
-            {pageSize * (pageIndex + 1) <= tableData.length
-              ? pageSize * (pageIndex + 1)
-              : tableData.length}{" "}
-            of {tableData.length} entries
-          </Text>
+          {!notShowEntriesText && (
+            <Text
+              fontSize="sm"
+              color="white"
+              fontWeight="500"
+              mb={{ sm: "24px", md: "0px" }}
+            >
+              Showing {pageSize * pageIndex + 1} to{" "}
+              {pageSize * (pageIndex + 1) <= tableData.length
+                ? pageSize * (pageIndex + 1)
+                : tableData.length}{" "}
+              of {tableData.length} entries
+            </Text>
+          )}
           <Stack direction="row" alignSelf="flex-end" spacing="4px" ms="auto">
             <Button
               variant="no-hover"
@@ -253,46 +273,60 @@ function SearchTable1(props) {
                 opacity: "0.7",
                 borderColor: "gray.500",
               }}
+              aria-label="previous"
             >
               <Icon as={GrFormPrevious} w="16px" h="16px" color="gray.400" />
             </Button>
-            {pageSize === 5 ? (
-              <NumberInput
-                max={pageCount - 1}
-                min={1}
-                w="75px"
-                mx="6px"
-                defaultValue="1"
-                onChange={(e) => gotoPage(e)}
-              >
-                <NumberInputField />
-                <NumberInputStepper>
-                  <NumberIncrementStepper onClick={() => nextPage()} />
-                  <NumberDecrementStepper onClick={() => previousPage()} />
-                </NumberInputStepper>
-              </NumberInput>
-            ) : (
-              createPages(pageCount).map((pageNumber, index) => {
-                return (
-                  <Button
-                    variant="no-hover"
-                    transition="all .5s ease"
-                    onClick={() => gotoPage(pageNumber - 1)}
-                    w="40px"
-                    h="40px"
-                    borderRadius="160px"
-                    bg={pageNumber === pageIndex + 1 ? "brand.200" : "#fff"}
-                    key={index}
+            {!notShowPagination && (
+              <>
+                {pageSize === 5 ? (
+                  <NumberInput
+                    max={pageCount - 1}
+                    min={1}
+                    w="75px"
+                    mx="6px"
+                    defaultValue="1"
+                    onChange={(_, page) => gotoPage(page)}
                   >
-                    <Text
-                      fontSize="xs"
-                      color={pageNumber === pageIndex + 1 ? "#fff" : "gray.600"}
-                    >
-                      {pageNumber}
-                    </Text>
-                  </Button>
-                );
-              })
+                    <NumberInputField />
+                    <NumberInputStepper>
+                      <NumberIncrementStepper
+                        aria-label="next-page"
+                        onClick={() => nextPage()}
+                      />
+                      <NumberDecrementStepper
+                        aria-label="previous-page"
+                        onClick={() => previousPage()}
+                      />
+                    </NumberInputStepper>
+                  </NumberInput>
+                ) : (
+                  createPages(pageCount).map((pageNumber, index) => {
+                    return (
+                      <Button
+                        variant="no-hover"
+                        transition="all .5s ease"
+                        onClick={() => gotoPage(pageNumber - 1)}
+                        w="40px"
+                        h="40px"
+                        borderRadius="160px"
+                        bg={pageNumber === pageIndex + 1 ? "brand.200" : "#fff"}
+                        key={index}
+                        aria-label={"page " + pageNumber}
+                      >
+                        <Text
+                          fontSize="xs"
+                          color={
+                            pageNumber === pageIndex + 1 ? "#fff" : "gray.600"
+                          }
+                        >
+                          {pageNumber}
+                        </Text>
+                      </Button>
+                    );
+                  })
+                )}
+              </>
             )}
             <Button
               variant="no-hover"
@@ -302,7 +336,10 @@ function SearchTable1(props) {
               h="40px"
               borderRadius="160px"
               bg="#fff"
-              display={pageSize === 5 ? "none" : canNextPage ? "flex" : "none"}
+              display={
+                pageSize === 5 ? "none" : getCanNextPage() ? "flex" : "none"
+              }
+              aria-label="next"
             >
               <Icon as={GrFormNext} w="16px" h="16px" color="gray.400" />
             </Button>
@@ -311,6 +348,6 @@ function SearchTable1(props) {
       </Flex>
     </>
   );
-}
+};
 
 export default SearchTable1;
