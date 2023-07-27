@@ -264,7 +264,13 @@ const SearchTable1 = ({
               of {tableData.length} entries
             </Text>
           )}
-          <Stack direction="row" alignSelf="flex-end" spacing="4px" ms="auto">
+          <Stack
+            direction="row"
+            alignSelf="flex-end"
+            spacing="4px"
+            ms="auto"
+            mb={4}
+          >
             <Button
               variant="no-hover"
               onClick={() => previousPage()}

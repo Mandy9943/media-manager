@@ -104,7 +104,7 @@ const ProductFormModal = ({ isOpen, onClose }: IProps) => {
   );
 
   useEffect(() => {
-    if (categories.length > 0) {
+    if (!product && categories.length > 0) {
       formik.setFieldValue("category", categories[0].name);
     }
 

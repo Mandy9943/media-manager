@@ -8,6 +8,7 @@ export interface IProduct {
   abbreviation: string;
   durationInSec?: number;
   category: {
+    id: number;
     name: string;
     hasLength?: boolean;
   };

@@ -19,11 +19,6 @@ export const globalStyles = {
     mainLigt:
       "linear-gradient(127.09deg, rgba(6, 11, 40, 0.626) 19.41%, rgba(10, 14, 35, 0.301) 76.65%)",
     main: "linear-gradient(127.09deg, rgba(6, 11, 40, 0.94) 19.41%, rgba(10, 14, 35, 0.49) 76.65%)",
-    mainDark:
-      "linear-gradient(127.09deg, rgba(3, 6, 22, 0.94) 19.41%, rgba(1, 2, 3, 0.49) 76.65%)",
-    darkAmber: " #FE7E07",
-    proteo: "#b28937",
-    frostySkies: "#06D7F6",
 
     brand: {
       50: "#cbbff8",
@@ -44,6 +39,7 @@ export const globalStyles = {
         fontFamily: inter.style.fontFamily,
 
         fontSize: "14px",
+        bg: "mainLigt",
       },
       "*::placeholder": {
         color: "gray.500",
@@ -51,9 +47,6 @@ export const globalStyles = {
       a: {
         textDecoration: "none !important",
         color: "inherit !important",
-      },
-      html: {
-        fontFamily: inter.style.fontFamily,
       },
     }),
   },

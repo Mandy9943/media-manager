@@ -11,140 +11,6 @@
       "insertDate": "2023-07-22",
       "releaseDate": "2022-05-14",
       "type": "movie",
-      "views": 10002,
-      "durationInSec": 150,
-      "id": 1
-    },
-    {
-      "name": "Five Feet Apart",
-      "abbreviation": "FFA",
-      "category": {
-        "id": 0,
-        "name": "Trailer Movie",
-        "hasLength": true
-      },
-      "insertDate": "2023-07-26",
-      "releaseDate": "2020-03-15",
-      "type": "movie",
-      "views": 35012,
-      "durationInSec": 15000,
-      "id": 2
-    },
-    {
-      "id": 3,
-      "name": "Spiderman: The Invisible Men",
-      "type": "movie",
-      "releaseDate": "2024-09-20",
-      "insertDate": "2023-07-26",
-      "views": 7500,
-      "abbreviation": "SIM",
-      "category": {
-        "name": "Trailer Movie",
-        "hasLength": true
-      }
-    },
-    {
-      "id": 4,
-      "name": "Stranger Things",
-      "type": "series",
-      "releaseDate": "2016-07-15",
-      "insertDate": "2023-07-26",
-      "views": 100000,
-      "abbreviation": "ST",
-      "category": {
-        "name": "Trailer TV",
-        "hasLength": false
-      }
-    },
-    {
-      "id": 5,
-      "name": "The Crown",
-      "type": "series",
-      "releaseDate": "2016-11-04",
-      "insertDate": "2023-07-26",
-      "views": 90000,
-      "abbreviation": "TC",
-      "category": {
-        "name": "Trailer TV",
-        "hasLength": false
-      }
-    },
-    {
-      "id": 6,
-      "name": "Avengers: Endgame",
-      "type": "movie",
-      "releaseDate": "2019-04-26",
-      "insertDate": "2023-07-26",
-      "views": 120000,
-      "abbreviation": "AE",
-      "category": {
-        "name": "Trailer Movie",
-        "hasLength": true
-      }
-    },
-    {
-      "id": 7,
-      "name": "The Mandalorian",
-      "type": "series",
-      "releaseDate": "2019-11-12",
-      "insertDate": "2023-07-26",
-      "views": 80000,
-      "abbreviation": "TM",
-      "category": {
-        "name": "Trailer TV",
-        "hasLength": false
-      }
-    },
-    {
-      "id": 8,
-      "name": "Inception",
-      "type": "movie",
-      "releaseDate": "2010-07-16",
-      "insertDate": "2023-07-26",
-      "views": 95000,
-      "abbreviation": "IN",
-      "category": {
-        "name": "Trailer Movie",
-        "hasLength": true
-      }
-    },
-    {
-      "id": 9,
-      "name": "Friends",
-      "type": "series",
-      "releaseDate": "1994-09-22",
-      "insertDate": "2023-07-26",
-      "views": 200000,
-      "abbreviation": "FR",
-      "category": {
-        "name": "Internet",
-        "hasLength": false
-      }
-    },
-    {
-      "id": 10,
-      "name": "Stranger Things 2",
-      "type": "series",
-      "releaseDate": "2017-10-27",
-      "insertDate": "2023-07-26",
-      "views": 110000,
-      "abbreviation": "ST2",
-      "category": {
-        "name": "Internet",
-        "hasLength": false
-      }
-    },
-    {
-      "name": "Spiderman",
-      "abbreviation": "SPM",
-      "category": {
-        "id": 0,
-        "name": "Trailer Movie",
-        "hasLength": true
-      },
-      "insertDate": "2023-07-22",
-      "releaseDate": "2022-05-14",
-      "type": "movie",
       "views": 1000,
       "durationInSec": 150,
       "id": 1
@@ -215,19 +81,6 @@
       }
     },
     {
-      "id": 7,
-      "name": "The Mandalorian",
-      "type": "series",
-      "releaseDate": "2019-11-12",
-      "insertDate": "2023-07-26",
-      "views": 80000,
-      "abbreviation": "TM",
-      "category": {
-        "name": "Trailer TV",
-        "hasLength": false
-      }
-    },
-    {
       "id": 8,
       "name": "Inception",
       "type": "movie",
@@ -238,19 +91,6 @@
       "category": {
         "name": "Trailer Movie",
         "hasLength": true
-      }
-    },
-    {
-      "id": 9,
-      "name": "Friends",
-      "type": "series",
-      "releaseDate": "1994-09-22",
-      "insertDate": "2023-07-26",
-      "views": 200000,
-      "abbreviation": "FR",
-      "category": {
-        "name": "Internet",
-        "hasLength": false
       }
     },
     {
@@ -265,6 +105,20 @@
         "name": "Internet",
         "hasLength": false
       }
+    },
+    {
+      "name": "Hulk",
+      "abbreviation": "HLK",
+      "category": {
+        "id": 2,
+        "name": "Trailer TV",
+        "hasLength": false
+      },
+      "insertDate": "2023-08-05",
+      "releaseDate": "2021-10-27",
+      "type": "movie",
+      "views": 12000000,
+      "id": 11
     }
   ],
   "categories": [

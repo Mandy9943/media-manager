@@ -1,6 +1,6 @@
 import Card from "@/components/Card/Card";
 import CardBody from "@/components/Card/CardBody";
-import SearchTable1 from "@/components/Tables/SearchTable1";
+import SearchTable1 from "@/components/Tables/ReactTable";
 import { useGetAllProducts } from "@/swr/useGetProducts";
 import { Center, Spinner } from "@chakra-ui/react";
 import productsColumns, { excludeSort } from "./columns";
