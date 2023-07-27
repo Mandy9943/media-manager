@@ -3,11 +3,6 @@ import {
   Flex,
   Icon,
   Input,
-  NumberDecrementStepper,
-  NumberIncrementStepper,
-  NumberInput,
-  NumberInputField,
-  NumberInputStepper,
   Select,
   Stack,
   Table,
@@ -293,53 +288,30 @@ const SearchTable1 = ({
             </Button>
             {!notShowPagination && (
               <>
-                {pageSize === 5 ? (
-                  <NumberInput
-                    max={pageCount - 1}
-                    min={1}
-                    w="75px"
-                    mx="6px"
-                    defaultValue="1"
-                    onChange={(_, page) => gotoPage(page)}
-                  >
-                    <NumberInputField />
-                    <NumberInputStepper>
-                      <NumberIncrementStepper
-                        aria-label="next-page"
-                        onClick={() => nextPage()}
-                      />
-                      <NumberDecrementStepper
-                        aria-label="previous-page"
-                        onClick={() => previousPage()}
-                      />
-                    </NumberInputStepper>
-                  </NumberInput>
-                ) : (
-                  createPages(pageCount).map((pageNumber, index) => {
-                    return (
-                      <Button
-                        variant="no-hover"
-                        transition="all .5s ease"
-                        onClick={() => gotoPage(pageNumber - 1)}
-                        w="40px"
-                        h="40px"
-                        borderRadius="160px"
-                        bg={pageNumber === pageIndex + 1 ? "brand.200" : "#fff"}
-                        key={index}
-                        aria-label={"page " + pageNumber}
+                {createPages(pageCount).map((pageNumber, index) => {
+                  return (
+                    <Button
+                      variant="no-hover"
+                      transition="all .5s ease"
+                      onClick={() => gotoPage(pageNumber - 1)}
+                      w="40px"
+                      h="40px"
+                      borderRadius="160px"
+                      bg={pageNumber === pageIndex + 1 ? "brand.200" : "#fff"}
+                      key={index}
+                      aria-label={"page " + pageNumber}
+                    >
+                      <Text
+                        fontSize="xs"
+                        color={
+                          pageNumber === pageIndex + 1 ? "#fff" : "gray.600"
+                        }
                       >
-                        <Text
-                          fontSize="xs"
-                          color={
-                            pageNumber === pageIndex + 1 ? "#fff" : "gray.600"
-                          }
-                        >
-                          {pageNumber}
-                        </Text>
-                      </Button>
-                    );
-                  })
-                )}
+                        {pageNumber}
+                      </Text>
+                    </Button>
+                  );
+                })}
               </>
             )}
             <Button

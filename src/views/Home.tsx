@@ -1,36 +1,26 @@
 import Container from "@/components/Container/Container";
-import { Button, Flex, Icon, useDisclosure } from "@chakra-ui/react";
+import state from "@/store";
+import { Button, Flex, Icon } from "@chakra-ui/react";
 import { BsPlusCircle } from "react-icons/bs";
-import ProductFormModal from "./components/ProductFormModal/ProductFormModal";
+import ProductFormCotainer from "./components/ProductFormModal/ProductFormCotainer";
 import ProductTable from "./components/ProductTable/ProductTable";
 const Home = () => {
-  const { isOpen, onClose, onOpen } = useDisclosure();
-
+  const handleOpenAddProductModal = () => {
+    state.isProductModal = true;
+    state.productForm = undefined;
+  };
   return (
     <Container my={10}>
       <Flex w="full" mb={5}>
-        <Button leftIcon={<Icon as={BsPlusCircle} />} onClick={onOpen}>
+        <Button
+          leftIcon={<Icon as={BsPlusCircle} />}
+          onClick={handleOpenAddProductModal}
+        >
           Media
         </Button>
       </Flex>
       <ProductTable />
-      <ProductFormModal
-        isOpen={isOpen}
-        onClose={onClose}
-        product={{
-          id: 1,
-          abbreviation: "ASFD",
-          category: {
-            name: "Sofa",
-            hasLength: false,
-          },
-          insertDate: "2022-10-15",
-          name: "Batma",
-          releaseDate: "2020-10-20",
-          views: 10,
-          type: "movie",
-        }}
-      />
+      <ProductFormCotainer />
     </Container>
   );
 };

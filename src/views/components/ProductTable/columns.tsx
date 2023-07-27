@@ -1,9 +1,11 @@
-import { IProduct } from "@/types/product.type";
+import ProductServices from "@/services/ProductServices";
+import state from "@/store";
+import { IProduct } from "@/types/product.interface";
 import { ICellProps } from "@/types/table.interface";
-import { formatNumber, formatSecondsTime } from "@/utils/functions";
+import { formatDate, formatNumber, formatSecondsTime } from "@/utils/functions";
 import { Divider, Flex, Icon, IconButton } from "@chakra-ui/react";
 import { FiEdit2, FiEye, FiTrash2 } from "react-icons/fi";
-
+import { mutate } from "swr";
 type ICell = ICellProps<IProduct>;
 
 const productsColumns = [
@@ -52,7 +54,7 @@ const productsColumns = [
       const rowData: IProduct = row.original;
       const date = new Date(rowData.releaseDate);
 
-      const formatedDate = date.toLocaleDateString(undefined);
+      const formatedDate = formatDate(date);
 
       return (
         <Flex justifyContent={"center"} w="full">
@@ -68,7 +70,7 @@ const productsColumns = [
       const rowData: IProduct = row.original;
       const date = new Date(rowData.insertDate);
 
-      const formatedDate = date.toLocaleDateString(undefined);
+      const formatedDate = formatDate(date);
 
       return <Flex>{formatedDate}</Flex>;
     },
@@ -118,18 +120,34 @@ const productsColumns = [
     accessorFn: (originalRow: IProduct, index: number) =>
       originalRow.category.name,
     cell: ({ row }: ICell) => {
+      const rowData: IProduct = row.original;
+
+      const productServices = new ProductServices();
+      const handleUpdateProduct = () => {
+        state.isProductModal = true;
+        state.productForm = rowData;
+      };
+      const handleDeleteProduct = async () => {
+        await productServices.delete(rowData.id);
+        mutate("/products");
+      };
+      const handleAddview = async () => {
+        await productServices.incrementView(rowData.id, rowData.views);
+        mutate("/products");
+      };
+
       return (
         <Flex gap={3} w="full" h="40px">
-          <IconButton aria-label="edit">
+          <IconButton aria-label="edit product" onClick={handleUpdateProduct}>
             <Icon as={FiEdit2} />
           </IconButton>
-          <IconButton aria-label="edit">
+          <IconButton aria-label="remove product" onClick={handleDeleteProduct}>
             <Icon as={FiTrash2} />
           </IconButton>
 
           <Divider orientation="vertical" />
 
-          <IconButton aria-label="edit">
+          <IconButton aria-label="increment view" onClick={handleAddview}>
             <Icon as={FiEye} />
           </IconButton>
         </Flex>

@@ -1,4 +1,4 @@
-import { formatNumber, formatSecondsTime } from "../functions";
+import { formatDate, formatNumber, formatSecondsTime } from "../functions";
 
 describe("formatSecondsTime function", () => {
   test("should format time to hh:mm:ss when greater than 1 hour", () => {
@@ -39,4 +39,20 @@ describe("formatNumber function", () => {
     expect(formatNumber(999.99)).toBe("999.99");
     expect(formatNumber(999999.99)).toBe("999,999.99");
   });
+});
+
+describe("formatDate function", () => {
+  test('should format date to "DD/MM/YYYY" correctly', () => {
+    const date = new Date("2023-07-27T12:34:56");
+    const formattedDate = formatDate(date);
+    expect(formattedDate).toBe("27/07/2023");
+  });
+
+  test("should format date with single-digit day and month", () => {
+    const date = new Date("2023-03-03");
+    const formattedDate = formatDate(date);
+    expect(formattedDate).toBe("03/03/2023");
+  });
+
+  // Puedes agregar más tests aquí para cubrir otros escenarios posibles.
 });

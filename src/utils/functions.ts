@@ -28,3 +28,16 @@ export const formatNumber = (number: number): string => {
 
   return numberString;
 };
+
+export const formatDate = (date: Date): string => {
+  const utcYear = date.getUTCFullYear();
+  const utcMonth = date.getUTCMonth() + 1; // Sumar 1 ya que los meses van de 0 a 11
+  const utcDay = date.getUTCDate();
+
+  // Formatear la fecha en una cadena en el formato "DD/MM/YYYY"
+  const formattedDate = `${utcDay.toString().padStart(2, "0")}/${utcMonth
+    .toString()
+    .padStart(2, "0")}/${utcYear}`;
+
+  return formattedDate;
+};

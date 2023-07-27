@@ -14,11 +14,11 @@ interface IProps extends InputProps {
 const MyInput = ({ label, errorMessage, isInvalid, ...rest }: IProps) => {
   return (
     <FormControl>
-      <FormLabel color="white" fontSize="xs" fontWeight="bold" mb="10px">
+      <FormLabel color="white" fontSize="sm" fontWeight="bold" mb="10px">
         {label}
       </FormLabel>
       <Input
-        color="gray.400"
+        color="gray.200"
         bg="#262f63"
         border="0.5px solid"
         borderColor="#E2E8F04D"
