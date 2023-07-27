@@ -174,11 +174,9 @@ const SearchTable1 = ({
                   );
                   let disableSort = !header.column.getCanSort();
 
-                  console.log(header.column.columnDef.header, disableSort);
                   if (disableIndex !== undefined && disableIndex !== -1) {
                     disableSort = true;
                   }
-                  console.log(header.column.columnDef.header, disableSort);
 
                   return (
                     <Th borderColor="#56577A" pe="0px" key={index}>

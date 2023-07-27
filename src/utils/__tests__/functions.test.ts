@@ -1,4 +1,4 @@
-import { formatNumber, formatSecondsTime } from "./functions";
+import { formatNumber, formatSecondsTime } from "../functions";
 
 describe("formatSecondsTime function", () => {
   test("should format time to hh:mm:ss when greater than 1 hour", () => {

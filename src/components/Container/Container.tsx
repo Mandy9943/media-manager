@@ -8,7 +8,7 @@ interface IProps extends FlexProps {
 const Container = ({ children, ...rest }: IProps) => {
   return (
     <Flex w="full" flexDir={"column"} alignItems={"center"}>
-      <Flex w="90%" {...rest}>
+      <Flex w="90%" {...rest} flexDir={"column"}>
         {children}
       </Flex>
     </Flex>

@@ -1,3 +1,5 @@
+import { Inter } from "next/font/google";
+const inter = Inter({ subsets: ["latin"] });
 export const globalStyles = {
   colors: {
     gray: {
@@ -39,7 +41,7 @@ export const globalStyles = {
   styles: {
     global: () => ({
       body: {
-        fontFamily: "Plus Jakarta Display",
+        fontFamily: inter.style.fontFamily,
 
         fontSize: "14px",
       },
@@ -51,7 +53,7 @@ export const globalStyles = {
         color: "inherit !important",
       },
       html: {
-        fontFamily: "Plus Jakarta Display",
+        fontFamily: inter.style.fontFamily,
       },
     }),
   },
