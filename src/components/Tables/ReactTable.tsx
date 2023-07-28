@@ -174,12 +174,18 @@ const SearchTable1 = ({
                   }
 
                   return (
-                    <Th borderColor="#56577A" pe="0px" key={index}>
+                    <Th
+                      borderColor="#56577A"
+                      px="12px"
+                      key={index}
+                      // pl={index === 0 ? "12px" : "6px"}
+                    >
                       <Flex
-                        justify="space-between"
+                        justify={index === 0 ? "flex-start" : "center"}
                         align="center"
                         fontSize={{ sm: "10px", lg: "12px" }}
                         color="gray.400"
+                        position={"relative"}
                         onClick={
                           !disableSort
                             ? header.column.getToggleSortingHandler()
@@ -201,6 +207,11 @@ const SearchTable1 = ({
                             h={{ sm: "10px", md: "14px" }}
                             color={!disableSort ? "gray.500" : "gray.400"}
                             float="right"
+                            ml={2}
+                            position={"absolute"}
+                            top={"50%"}
+                            transform={"translateY(-50%)"}
+                            right={"-5px"}
                             as={
                               header.column.getIsSorted()
                                 ? (header.column.getIsSorted() as SortDirection) ===

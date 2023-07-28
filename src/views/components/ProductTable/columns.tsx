@@ -72,7 +72,7 @@ const productsColumns = [
 
       const formatedDate = formatDate(date);
 
-      return <Flex>{formatedDate}</Flex>;
+      return <Flex justify={"center"}>{formatedDate}</Flex>;
     },
   },
   {
@@ -137,7 +137,7 @@ const productsColumns = [
       };
 
       return (
-        <Flex gap={3} w="full" h="40px">
+        <Flex gap={3} w="full" h="40px" justify={"center"}>
           <IconButton aria-label="edit product" onClick={handleUpdateProduct}>
             <Icon as={FiEdit2} />
           </IconButton>
