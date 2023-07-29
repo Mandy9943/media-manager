@@ -48,6 +48,11 @@ export const globalStyles = {
         textDecoration: "none !important",
         color: "inherit !important",
       },
+
+      "& .swal2-modal": {
+        bg: "brand.900",
+        // color: "white",
+      },
     }),
   },
 };

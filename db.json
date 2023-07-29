@@ -1,51 +1,6 @@
 {
   "products": [
     {
-      "name": "Spiderman",
-      "abbreviation": "SPM",
-      "category": {
-        "id": 0,
-        "name": "Trailer Movie",
-        "hasLength": true
-      },
-      "insertDate": "2023-07-22",
-      "releaseDate": "2022-05-14",
-      "type": "movie",
-      "views": 1002,
-      "durationInSec": 150,
-      "id": 1
-    },
-    {
-      "name": "Five Feet Apart",
-      "abbreviation": "FFA",
-      "category": {
-        "id": 1,
-        "name": "Internet",
-        "hasLength": true
-      },
-      "insertDate": "2023-07-26",
-      "releaseDate": "2020-03-15",
-      "type": "movie",
-      "views": 35000,
-      "durationInSec": 450,
-      "id": 2
-    },
-    {
-      "name": "Spiderman: The Invisible Men",
-      "abbreviation": "SIM",
-      "category": {
-        "id": 0,
-        "name": "Trailer Movie",
-        "hasLength": true
-      },
-      "insertDate": "2023-07-26",
-      "releaseDate": "2024-09-20",
-      "type": "movie",
-      "views": 7500,
-      "durationInSec": 500,
-      "id": 3
-    },
-    {
       "name": "Stranger Things",
       "abbreviation": "STT",
       "category": {

@@ -5,6 +5,7 @@ import { ICellProps } from "@/types/table.interface";
 import { formatDate, formatNumber, formatSecondsTime } from "@/utils/functions";
 import { Divider, Flex, Icon, IconButton } from "@chakra-ui/react";
 import { FiEdit2, FiEye, FiTrash2 } from "react-icons/fi";
+import Swal from "sweetalert2";
 import { mutate } from "swr";
 type ICell = ICellProps<IProduct>;
 
@@ -128,8 +129,38 @@ const productsColumns = [
         state.productForm = rowData;
       };
       const handleDeleteProduct = async () => {
-        await productServices.delete(rowData.id);
-        mutate("/products");
+        const swalWithBootstrapButtons = Swal.mixin({});
+
+        swalWithBootstrapButtons
+          .fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonText: "Yes, delete it!",
+            cancelButtonText: "No, cancel!",
+            reverseButtons: true,
+          })
+          .then(async (result) => {
+            if (result.isConfirmed) {
+              await productServices.delete(rowData.id);
+              swalWithBootstrapButtons.fire(
+                "Deleted!",
+                "Your file has been deleted.",
+                "success"
+              );
+              mutate("/products");
+            } else if (
+              /* Read more about handling dismissals below */
+              result.dismiss === Swal.DismissReason.cancel
+            ) {
+              swalWithBootstrapButtons.fire(
+                "Cancelled",
+                "Your media is safe :)",
+                "error"
+              );
+            }
+          });
       };
       const handleAddview = async () => {
         await productServices.incrementView(rowData.id, rowData.views);
